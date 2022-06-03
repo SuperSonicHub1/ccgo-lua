@@ -1,0 +1,14 @@
+#!/bin/bash
+
+rm -rf lua-5.4.4/
+
+curl -R -O http://www.lua.org/ftp/lua-5.4.4.tar.gz
+tar zxf lua-5.4.4.tar.gz
+
+# cd lua-5.4.4/
+# curl -R -O https://www.lua.org/extras/5.4/one.tar.gz
+# tar zxf one.tar.gz
+# rm one.tar.gz
+# cd ..
+
+rm lua-5.4.4.tar.gz
