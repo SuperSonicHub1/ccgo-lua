@@ -1,0 +1,21 @@
+#!/bin/bash
+# Convert Lua source into one C file
+# Currently focused on building the binary
+
+# Ultra-hacky way to preserve system headers
+# https://stackoverflow.com/a/38163793
+# Praise be to Jonathan Leffler
+sysdir="system-headers"
+rm -rf "$sysdir/"
+
+sys_headers=$(grep -h -e '^[[:space:]]*#[[:space:]]*include[[:space:]]*<[^>]*>' -r "${@:-.}" |
+sed 's/^[[:space:]]*#[[:space:]]*include[[:space:]]*<\([^>]*\)>.*/\1/' |
+sort -u)
+
+while read -r header;
+do
+	mkdir -p "$sysdir/$(dirname $header)"
+    echo "include <$header>" > "$sysdir/$header"
+done <<< "$sys_headers"
+
+cpp -DMAKE_LUA -DLUA_USE_C89 -DLUA_C89_NUMBERS -I lua-5.4.4/src -nostdinc -Dinclude=#include -Isystem-headers one/one.c

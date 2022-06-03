@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ccgo -I lua-5.4.4/src/ -DMAKE_LUA one/one.c
+# rm -f lua.c
+# ./one-file > lua.c
+# ccgo lua.c -o lua.go
